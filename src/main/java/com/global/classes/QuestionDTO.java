@@ -1,17 +1,7 @@
-package com.global.entities;
+package com.global.classes;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "questions")
-public class QuestionIntity {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class QuestionDTO {
+	
 	int id;
 	String question;
 	String choice1;
@@ -20,38 +10,27 @@ public class QuestionIntity {
 	String choice4;
 	String correctAnswer;
 	
-	String matrial;   //not required it will take it from token of teacher
-	String teacherName;   
 	
 	
-	public QuestionIntity(int id, String question, String choice1, String choice2, String choice3, String choice4) {
+	public QuestionDTO(int id, String question, String choice1, String choice2, String choice3, String choice4,
+			String correctAnswer) {
+		super();
 		this.id = id;
 		this.question = question;
 		this.choice1 = choice1;
 		this.choice2 = choice2;
 		this.choice3 = choice3;
 		this.choice4 = choice4;
+		this.correctAnswer = correctAnswer;
 	}
 	
-	public QuestionIntity() {
+	
+	public QuestionDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-
-	public String getMatrial() {
-		return matrial;
-	}
-	public void setMatrial(String matrial) {
-		this.matrial = matrial;
-	}
-	public String getTeacherName() {
-		return teacherName;
-	}
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
-	}
 	public int getId() {
 		return id;
 	}
@@ -96,10 +75,5 @@ public class QuestionIntity {
 	}
 	
 	
-	
-	
-	
-	
+
 }
-
-

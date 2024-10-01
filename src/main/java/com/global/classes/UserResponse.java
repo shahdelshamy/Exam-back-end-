@@ -6,13 +6,6 @@ public class UserResponse {
 	
 	int id;
 	
-	
-
-	public UserResponse(String token, int id) {
-		super();
-		this.token = token;
-		this.id = id;
-	}
 
 	public String getToken() {
 		return token;
@@ -29,8 +22,8 @@ public class UserResponse {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+
 	
 	
 	

@@ -1,18 +1,34 @@
 package com.global.classes;
 
-public class UserDTO {
+public class StudentDTO {
 	
 	int id;
 	String name;
 	String phone;
-	int age;
+	float age;
 	String email;
 	String password;
-	boolean isStudent;
+
+	
+
+	public StudentDTO(int id, String name, String phone, float age, String email, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.age = age;
+		this.email = email;
+		this.password = password;
+	}
 	
 	
-	
-	public int getId() {
+	public StudentDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public float getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -30,10 +46,10 @@ public class UserDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public int getAge() {
+	public float getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(float age) {
 		this.age = age;
 	}
 	public String getEmail() {
@@ -48,14 +64,8 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean getIsStudent() {
-		return isStudent;
-	}
-	public void setIsStudent(boolean isStudent) {
-		this.isStudent = isStudent;
-	}
 	
-	
+
 	
 	
 }

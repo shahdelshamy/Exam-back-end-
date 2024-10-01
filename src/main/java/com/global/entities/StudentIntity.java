@@ -9,44 +9,33 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
-public class UserIntity {
+@Table(name = "Students")
+public class StudentIntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	String name;
 	String phone;
-	int age;
+	float age;
 	String email;
 	String password;
-	boolean isStudent;
-	String token;
-	
-	
-	
-	
-	public String getToken() {
-		return token;
+	String teacherName;
+
+	public String getTeacherName() {
+		return teacherName;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 
-	public boolean getIsStudent() {
-		return isStudent;
-	}
-
-	public void setIsStudent(boolean isStudent) {
-		this.isStudent = isStudent;
-	}
 
 	public void setId(int id) {
 		this.id=id;
 	}
 	
-	public void setAge(int age) {
+	public void setAge(float age) {
 		this.age=age;
 	}
 	
@@ -71,7 +60,7 @@ public class UserIntity {
 		return id;
 	}
 	
-	public int getAge() {
+	public float getAge() {
 		return age;
 	}
 	

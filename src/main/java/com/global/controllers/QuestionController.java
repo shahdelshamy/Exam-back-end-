@@ -15,38 +15,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.global.classes.QuestionDTO;
 import com.global.entities.QuestionIntity;
-import com.global.entities.UserIntity;
+import com.global.entities.StudentIntity;
 import com.global.services.QuestionService;
 
 @RestController
-@RequestMapping("/question/false")    //false mean teacher
+@RequestMapping("/question")    //false mean teacher
 public class QuestionController {
 
 	@Autowired
 	QuestionService qService;
 	
 	@PostMapping("/insert")
-	public String insert(@RequestBody QuestionIntity q,@RequestHeader String authorization) throws Exception {
-		qService.insertQuestion(q,authorization);
+	public String insert(@RequestBody QuestionDTO q,@RequestHeader String authentication) throws Exception {
+		qService.insertQuestion(q,authentication);
 		return "The question is added";
 	}
 	
 
 	@PutMapping("/update")
-	public String update(@RequestBody QuestionIntity q,@RequestHeader String authorization) throws Exception {
-		qService.update(q,authorization);
+	public String update(@RequestBody QuestionDTO q,@RequestHeader String authentication) throws Exception {
+		qService.update(q,authentication);
 		return "Question updated";
 	}
 	
 	@GetMapping("/findAll")
-	public List<QuestionIntity> findAll(@RequestHeader String authorization) throws Exception {
-		return qService.findAll(authorization);
+	public List<QuestionDTO> findAll(@RequestHeader String authentication) throws Exception {
+		return qService.findAll(authentication);
 	}
 	
 	@GetMapping("/find/{id}")
-	public QuestionIntity findById(@PathVariable int id) {
-		return qService.findById(id);
+	public QuestionIntity findById(@PathVariable int id,@RequestHeader String authentication) throws Exception {
+		return qService.findById(id,authentication);
 	}
 	
 	@GetMapping("/findCorrectAnswer/{id}")
@@ -55,13 +56,13 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/numberOfQuestions")
-	public String numberOfQuestions()  {
-		return "The number of questions now is "+qService.countOfQuestions();
+	public String numberOfQuestions(@RequestHeader String authentication) throws Exception  {
+		return "The number of questions now is "+qService.countOfQuestions(authentication);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public String delete(@PathVariable int id,@RequestHeader String authorization) throws Exception {
-		qService.delete(id,authorization);
+	public String delete(@PathVariable int id,@RequestHeader String authentication) throws Exception {
+		qService.delete(id,authentication);
 		return "The question deleted";
 	}
 	

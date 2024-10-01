@@ -22,7 +22,7 @@ public class AnswerIntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "student_id")
-	UserIntity student;
+	StudentIntity student;
 	
 	@ManyToOne
 	@JoinColumn(name = "question_id")
@@ -44,11 +44,11 @@ public class AnswerIntity {
 
 	
 
-	public UserIntity getStudent() {
+	public StudentIntity getStudent() {
 		return student;
 	}
 
-	public void setStudent(UserIntity student) {
+	public void setStudent(StudentIntity student) {
 		this.student = student;
 	}
 
