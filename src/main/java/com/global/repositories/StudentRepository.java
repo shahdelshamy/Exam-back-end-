@@ -22,7 +22,7 @@ public interface StudentRepository extends CrudRepository<StudentIntity,Integer>
 	@Query("select student.id from StudentIntity student where student.email=:email and student.password=:password")
 	public Integer selectId(String email,String password);
 	
-	@Query("select new com.global.classes.StudentDTO(s.id,s.name,s.phone,s.age,s.email,s.password) from StudentIntity s where s.teacherName=:teacherName ")
+	@Query("select new com.global.classes.StudentDTO(s.id,s.name,s.phone,s.age,s.email,s.password) from StudentIntity s join s.teachers t  where t.name=:teacherName ")
 	public List<StudentDTO> findByTeacherName(String teacherName);
 	
 	

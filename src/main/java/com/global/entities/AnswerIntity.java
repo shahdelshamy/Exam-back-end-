@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "answers")
@@ -24,10 +25,12 @@ public class AnswerIntity {
 	@JoinColumn(name = "student_id")
 	StudentIntity student;
 	
+	@NotNull(message = "Quesion Id Field is Required")
 	@ManyToOne
 	@JoinColumn(name = "question_id")
 	QuestionIntity question;
 	
+	@NotNull(message = "Answer Id Field is Required")
 	String answer;
 
 	int score;

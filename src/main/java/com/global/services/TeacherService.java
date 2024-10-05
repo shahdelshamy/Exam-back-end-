@@ -1,11 +1,15 @@
 package com.global.services;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.global.classes.Authentication;
+import com.global.classes.TeacherDTO;
 import com.global.classes.UserResponse;
 import com.global.entities.TeacherIntity;
 import com.global.repositories.TeacherRepositry;
@@ -19,17 +23,23 @@ public class TeacherService {
 	
 	Authentication auth=new Authentication();
 	
-	public UserResponse insert(TeacherIntity teacher) {
-		teacherRepo.save(teacher);
+	public UserResponse insert(TeacherIntity teacher) throws Exception {
+	
+		if(auth.checkEmailAndPhone(teacher.getEmail(),teacher.getPhone())) {
+			teacherRepo.save(teacher);
+			
+			Authentication token=new Authentication();
+			String encriptedToken=token.encript(new Gson().toJson(teacher));
+			
+			UserResponse user=new UserResponse();
+			user.setId(teacherRepo.selectId(teacher.getEmail(), teacher.getPassword()));
+			user.setToken(encriptedToken);
+			
+			return user;
+		}else {
+			throw new Exception("The formate of Email or phone number not corect");
+		}
 		
-		Authentication token=new Authentication();
-		String encriptedToken=token.encript(new Gson().toJson(teacher));
-		
-		UserResponse user=new UserResponse();
-		user.setId(teacherRepo.selectId(teacher.getEmail(), teacher.getPassword()));
-		user.setToken(encriptedToken);
-		
-		return user;
 	}
 	
 	public UserResponse update(TeacherIntity teacher,String token) throws Exception {
@@ -43,8 +53,12 @@ public class TeacherService {
 		return null;
 	}
 	
-	public TeacherIntity findById(int id) {
-		return teacherRepo.findById(id).orElseThrow(()-> new RuntimeException("Teacher not fount"));
+	public Optional<TeacherIntity> findById(int id) {
+		return teacherRepo.findById(id);
+	}
+	
+	public List<TeacherDTO> findTeacherAsStudent(int studentID) {
+		return teacherRepo.findTeacherAsStudent(studentID);
 	}
 	
 	public List<TeacherIntity> findAll() {

@@ -1,6 +1,9 @@
 package com.global.classes;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.global.entities.StudentIntity;
 import com.global.entities.TeacherIntity;
@@ -57,6 +60,13 @@ public class Authentication {
        return  object ;
    }
   
+   public boolean checkEmailAndPhone(String email,String phone) {
+	    String regexEmail="^[\\w]+@(gmail|outlook)\\.com$";
+		String regexPhone="^\\d{11}$";
+		Matcher patternEmail=Pattern.compile(regexEmail).matcher(email);
+		Matcher patternPhone=Pattern.compile(regexPhone).matcher(phone);
+		return patternEmail.find() && patternPhone.find();
+   }
 	
 	
 }

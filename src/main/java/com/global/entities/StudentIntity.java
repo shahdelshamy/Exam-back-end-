@@ -1,12 +1,23 @@
 package com.global.entities;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Students")
@@ -15,21 +26,32 @@ public class StudentIntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+	@NotNull(message = "Name Field Is Required")
 	String name;
+	@NotNull(message = "Phone Field Is Required")
 	String phone;
+	@NotNull(message = "Age Field Is Required")
 	float age;
+	
+	@NotNull(message = "Email Field Is Required")
 	String email;
+	@NotNull(message = "Password Field Is Required")
 	String password;
-	String teacherName;
+	
+	@NotNull(message = "Teacher Field Is Required")
+	@ManyToMany()
+	@JoinTable(name = "student_teacher",joinColumns = @JoinColumn(name="student_id"),inverseJoinColumns = @JoinColumn(name="teacher_id"))
+	List <TeacherIntity> teachers= new ArrayList<>();
 
-	public String getTeacherName() {
-		return teacherName;
+	
+
+	public List<TeacherIntity> getTeachers() {
+		return teachers;
 	}
 
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
+	public void setTeachers(List<TeacherIntity> teachers) {
+		this.teachers = teachers;
 	}
-
 
 	public void setId(int id) {
 		this.id=id;
@@ -80,7 +102,8 @@ public class StudentIntity {
 	public String getPassword() {
 		return password;
 	}
-	
+
+
 	
 	
 	

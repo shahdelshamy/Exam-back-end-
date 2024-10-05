@@ -1,6 +1,7 @@
 package com.global.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.global.classes.StudentDTO;
 import com.global.classes.UserResponse;
 import com.global.entities.TeacherIntity;
+import com.global.services.StudentService;
 import com.global.services.TeacherService;
 
 @RestController
@@ -25,8 +29,11 @@ public class TeacherController {
 	@Autowired
 	TeacherService teacherService;
 	
+	@Autowired
+	StudentService studentService;
+	
 	@PostMapping("/insert")
-	public UserResponse insertTeacher(@RequestBody TeacherIntity teacher) {
+	public UserResponse insertTeacher(@RequestBody TeacherIntity teacher) throws Exception {
 		return teacherService.insert(teacher);
 	}
 	
@@ -35,8 +42,13 @@ public class TeacherController {
 		return teacherService.update(teacher,authentication);
 	}
 	
+	@GetMapping("/findAllStudents")
+	public List<StudentDTO> findStudentsByTeacherName(@RequestHeader String authentication) throws Exception {
+		return studentService.findAllStudentsAsTeacher(authentication);
+	}
+	
 	@GetMapping("/findById/{id}")
-	public TeacherIntity findTeacher(@PathVariable int id) {
+	public Optional<TeacherIntity> findTeacher(@PathVariable int id) {
 		return teacherService.findById(id);
 	}
 	

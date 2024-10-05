@@ -25,7 +25,7 @@ public interface AnswerRepository extends CrudRepository<AnswerIntity, Integer> 
 		//if we remove this com.global.classes.StudentResponse it give me error that it can't convert from AnswerIntity to StudentResponse
 		//create and return custom object form StudentResponse 
 		
-	@Query("select new com.global.classes.StudentResponse(st.name,q.question,ans.answer,ans.score) from AnswerIntity ans join ans.student st join ans.question q where st.teacherName=:teacherName order by st.name")
+	@Query("select new com.global.classes.StudentResponse(st.name,q.question,ans.answer,ans.score) from AnswerIntity ans join ans.student st join ans.question q where q.teacher.name=:teacherName order by st.name")
 	public List<StudentResponse> findAllByDetails(String teacherName);
 	
 	     //SQL
@@ -33,14 +33,14 @@ public interface AnswerRepository extends CrudRepository<AnswerIntity, Integer> 
 	public List findAllStudentsNative();
 	
 	
-	@Query("select new com.global.classes.StudentResponseTopFail(st.name,sum(ans.score) as degree) from AnswerIntity ans join ans.student st  where st.teacherName=:teacherName group by st.name  order by sum(ans.score) desc ")
+	@Query("select new com.global.classes.StudentResponseTopFail(st.name,sum(ans.score) as degree) from AnswerIntity ans join ans.student st  join st.teachers t where t.name=:teacherName group by st.name  order by sum(ans.score) desc ")
 	public List<StudentResponseTopFail> findAllStudents(String teacherName);
 	
 	
-	@Query("select new com.global.classes.StudentResponseTopFail(st.name,sum(ans.score) as degree) from AnswerIntity ans join ans.student st where st.teacherName=:teacherName group by st.name having sum(ans.score) >= :successDegree order by sum(ans.score) desc ")
+	@Query("select new com.global.classes.StudentResponseTopFail(st.name,sum(ans.score) as degree) from AnswerIntity ans join ans.student st join st.teachers t where t.name=:teacherName group by st.name having sum(ans.score) >= :successDegree order by sum(ans.score) desc ")
 	public Page<StudentResponseTopFail> findTopStudents(Pageable pageable,int successDegree,String teacherName);
 	
-	@Query("select new com.global.classes.StudentResponseTopFail(st.name,sum(ans.score) as degree) from AnswerIntity ans join ans.student st where st.teacherName=:teacherName group by st.name having sum(ans.score) < :successDegree order by sum(ans.score) desc ")
+	@Query("select new com.global.classes.StudentResponseTopFail(st.name,sum(ans.score) as degree) from AnswerIntity ans join ans.student st join st.teachers t where t.name=:teacherName group by st.name having sum(ans.score) < :successDegree order by sum(ans.score) desc ")
 	public List<StudentResponseTopFail> findFailStudents(int successDegree,String teacherName);
 	
 	

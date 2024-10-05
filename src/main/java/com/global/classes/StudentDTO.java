@@ -28,7 +28,7 @@ public class StudentDTO {
 	}
 
 
-	public float getId() {
+	public int getId() {
 		return id;
 	}
 	public void setId(int id) {

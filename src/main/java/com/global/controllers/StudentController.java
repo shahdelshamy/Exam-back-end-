@@ -31,13 +31,13 @@ public class StudentController {
 	StudentService studentService;
 
 	@PostMapping("/insert")
-	public UserResponse insertStudent(@RequestBody StudentIntity teacher) {
-		return studentService.insert(teacher);
+	public UserResponse insertStudent(@RequestBody StudentIntity student) throws Exception {
+		return studentService.insert(student);
 	}
 	
 	@PutMapping("/update")
-	public UserResponse insertStudent(@RequestBody StudentIntity teacher,@RequestHeader String authentication) throws Exception {
-		return studentService.update(teacher,authentication);
+	public UserResponse insertStudent(@RequestBody StudentIntity student,@RequestHeader String authentication) throws Exception {
+		return studentService.update(student,authentication);
 	}
 	
 	@GetMapping("/findById/{id}")
@@ -50,10 +50,6 @@ public class StudentController {
 		return studentService.findAll();
 	}
 	
-	@GetMapping("/findAllByTeacherName")
-	public List<StudentDTO> findStudentsByTeacherName(@RequestParam String teacherName) {
-		return studentService.findAllByTeacherName(teacherName);
-	}
 	
 	@DeleteMapping("/delete/{id}")
 	public String deleteStudent(@PathVariable int id,@RequestHeader String authentication) {

@@ -47,8 +47,7 @@ public class QuestionService {
 			q.setChoice3(question.getChoice3());
 			q.setChoice4(question.getChoice4());
 			q.setCorrectAnswer(question.getCorrectAnswer());
-			q.setMatrial(teacher.getMatrial());
-			q.setTeacherName(teacher.getName());
+			q.setTeacher(teacher);
 			
 			qRepo.save(q);
 		}else {
@@ -80,8 +79,8 @@ public class QuestionService {
 		}
 	}
 	
-	public QuestionIntity checkingQuestion(int id) throws Exception {
-			return qRepo.findById(id).orElseThrow(()-> new RuntimeException("the question not found"));
+	public QuestionIntity checkingQuestion(int id,String TeacherName) throws Exception {
+			return qRepo.findByIdAndName(id,TeacherName).orElseThrow(()->new RuntimeException("the question not found"));
 	}
 	
 	public List<QuestionDTO> findAll(String authorization) throws Exception {

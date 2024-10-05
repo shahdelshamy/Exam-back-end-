@@ -1,7 +1,6 @@
 package com.global.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +16,11 @@ import com.global.classes.AnswerDTO;
 import com.global.classes.QuestionDTOAsStudent;
 import com.global.classes.StudentResponse;
 import com.global.classes.StudentResponseTopFail;
+import com.global.classes.TeacherDTO;
 import com.global.entities.AnswerIntity;
 import com.global.entities.QuestionIntity;
-//import com.global.services.AnswerService;
 import com.global.services.AnswerService;
+
 
 @RestController
 @RequestMapping("/answers")
@@ -30,22 +30,28 @@ public class AnswerController {
 	AnswerService ansService;
 	
 	@PostMapping("/insert")
-	public String insert(@RequestBody AnswerDTO answer,@RequestHeader String authentication) throws Exception {
-		ansService.insert(answer,authentication);
+	public String insert(@RequestBody AnswerDTO answer,@RequestHeader String authentication,@RequestHeader String teacherName) throws Exception {
+		ansService.insert(answer,authentication,teacherName);
 		return "Your answer recorded";
 	}
 	
 	@PutMapping("/update")
-	public String updateAnswer(@RequestBody AnswerDTO answer,@RequestHeader String authentication) throws Exception {
-		ansService.update(answer,authentication);
+	public String updateAnswer(@RequestBody AnswerDTO answer,@RequestHeader String authentication,@RequestHeader String teacherName) throws Exception {
+		ansService.update(answer,authentication,teacherName);
 		return "Your answer updated";
 	}
 	
 	@GetMapping("/findQuestion")
-	public List<QuestionDTOAsStudent>findQuestionsAsStudent(@RequestHeader String authentication) throws Exception{
-		return ansService.findQuestionsAsStudent(authentication);
+	public List<QuestionDTOAsStudent>findQuestionsAsStudent(@RequestHeader String authentication,@RequestHeader String teacherName) throws Exception{
+		return ansService.findQuestionsAsStudent(authentication,teacherName);
+	}
+	@GetMapping("/findTeachers")
+	public List<TeacherDTO>findTeachers(@RequestHeader String authentication) throws Exception{
+		return ansService.findTeachers(authentication);
 	}
 	
+	
+	        //Teacher
 	@GetMapping("/findAnswersByDetails")
 	public List<StudentResponse> findAllByDetails(@RequestHeader String authentication) throws Exception {
 		return ansService.findAllByDetails(authentication);

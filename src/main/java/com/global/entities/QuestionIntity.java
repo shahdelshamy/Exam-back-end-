@@ -1,10 +1,16 @@
 package com.global.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "questions")
@@ -13,17 +19,22 @@ public class QuestionIntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+	@NotNull(message = "Name Field is Required")
 	String question;
+	@NotNull(message = "Choice1 Field is Required")
 	String choice1;
+	@NotNull(message = "Choice2 Field is Required")
 	String choice2;
 	String choice3;
 	String choice4;
+	@NotNull(message = "Correct Answer Field is Required")
 	String correctAnswer;
 	
-	String matrial;   //not required it will take it from token of teacher
-	String teacherName;   
+	@ManyToOne
+	@JoinColumn(name = "teacher_id")
+    TeacherIntity teacher;
 	
-	
+
 	public QuestionIntity(int id, String question, String choice1, String choice2, String choice3, String choice4) {
 		this.id = id;
 		this.question = question;
@@ -38,20 +49,14 @@ public class QuestionIntity {
 		// TODO Auto-generated constructor stub
 	}
 
+	public TeacherIntity getTeacher() {
+		return teacher;
+	}
 
+	public void setTeacher(TeacherIntity teacher) {
+		this.teacher = teacher;
+	}
 
-	public String getMatrial() {
-		return matrial;
-	}
-	public void setMatrial(String matrial) {
-		this.matrial = matrial;
-	}
-	public String getTeacherName() {
-		return teacherName;
-	}
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
-	}
 	public int getId() {
 		return id;
 	}

@@ -1,18 +1,25 @@
 package com.global.services;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.global.classes.Authentication;
 import com.global.classes.StudentDTO;
 import com.global.classes.UserResponse;
 import com.global.entities.StudentIntity;
+import com.global.entities.TeacherIntity;
 import com.global.entities.StudentIntity;
 import com.global.repositories.StudentRepository;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class StudentService {
@@ -20,22 +27,42 @@ public class StudentService {
 	@Autowired
 	StudentRepository userRepo;
 	
-	private Authentication auth=new Authentication();
+	@Autowired
+	TeacherService teacher;
 	
-	public UserResponse insert(StudentIntity student) {
-		
-		userRepo.save(student);
-		
-		Authentication token=new Authentication();
-		
-		String encriptedToken=auth.encript(new Gson().toJson(student));
-		
-		UserResponse user=new UserResponse();
-		
-		user.setId(userRepo.selectId(student.getEmail(), student.getPassword()));
-		user.setToken(encriptedToken);
-		
-		return user;
+	private Authentication auth=new Authentication();
+
+	
+	public UserResponse insert(StudentIntity student) throws Exception {
+		if(auth.checkEmailAndPhone(student.getEmail(), student.getPhone())) {
+			List <TeacherIntity> teacherStudent = new ArrayList<>();
+			for(int i=0;i<student.getTeachers().size();i++) {
+				Optional<TeacherIntity>teacherExist= teacher.findById(student.getTeachers().get(i).getId());
+				if(teacherExist.isPresent()) {
+					teacherStudent.add(teacherExist.get());
+				}else{
+					throw new Exception("The teachher not found");
+				}
+			}
+			student.setTeachers(teacherStudent);
+			userRepo.save(student);
+			
+			ObjectMapper objectToString=new ObjectMapper();       //Jackson
+			String value=objectToString.writeValueAsString(student);
+			
+			String encriptedToken=auth.encript(value);
+			System.out.println("Serialized JSON: " + encriptedToken);
+			
+			UserResponse user=new UserResponse();
+			
+			user.setId(userRepo.selectId(student.getEmail(), student.getPassword()));
+			user.setToken(encriptedToken);
+			
+			return user;
+		}else {
+			throw new Exception("The formate of Email or phone number not corect");
+		}
+
 	}
 	
 	public UserResponse update(StudentIntity student,String token) throws Exception {
@@ -59,8 +86,13 @@ public class StudentService {
 		return (List<StudentIntity>) userRepo.findAll();
 	}
 	
-	public List<StudentDTO> findAllByTeacherName(String teacherName) {
-		return (List<StudentDTO>) userRepo.findByTeacherName(teacherName);
+	public List<StudentDTO> findAllStudentsAsTeacher(String authentication) throws Exception {
+		if(auth.decriptTeacher(authentication) instanceof TeacherIntity) {
+			return (List<StudentDTO>) userRepo.findByTeacherName(auth.decriptTeacher(authentication).getName());
+		}else {
+			throw new Exception("Not Allowed");
+		}
+		
 	}
 	
 

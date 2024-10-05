@@ -13,6 +13,7 @@ import com.global.classes.Authentication;
 import com.global.classes.QuestionDTOAsStudent;
 import com.global.classes.StudentResponse;
 import com.global.classes.StudentResponseTopFail;
+import com.global.classes.TeacherDTO;
 import com.global.classes.StudentDTO;
 import com.global.entities.AnswerIntity;
 import com.global.entities.QuestionIntity;
@@ -20,12 +21,12 @@ import com.global.entities.StudentIntity;
 import com.global.entities.TeacherIntity;
 import com.global.repositories.AnswerRepository;
 
+
 @Service
 public class AnswerService {
 
 	@Autowired
 	AnswerRepository ansRepo;
-	
 	
 	@Autowired
 	QuestionService qService;
@@ -33,65 +34,93 @@ public class AnswerService {
 	@Autowired
 	StudentService studentService;
 	
+	@Autowired
+	TeacherService teacherService;
+	
 	private Authentication token=new Authentication();
 	
 	
-	public void insert(AnswerDTO answer,String authentication) throws Exception {
+	public void insert(AnswerDTO answer,String authentication,String teacherName) throws Exception {
 		
 		StudentDTO user=new StudentDTO();
+		boolean checkTeacher;
 		
 		if(token.decriptStudent(authentication) instanceof StudentIntity) {
 			 StudentIntity studentFromToken=token.decriptStudent(authentication);
-				
-				Optional<AnswerIntity> ansExist= ansRepo.findByStudentIdAndQuestionId(answer.getStudentId(), answer.getQuestionId())	;
-				
-				StudentIntity student=studentService.findById(studentFromToken.getId());
-				
-				QuestionIntity question=qService.checkingQuestion(answer.getQuestionId());
-				
-				AnswerIntity ansIntity;
-				
-				if(ansExist.isPresent()) {
-					ansIntity=ansExist.get();
-					ansIntity.setAnswer(answer.getAnswer());
-				}else {
-					ansIntity=new AnswerIntity();
-					ansIntity.setStudent(student);
-					ansIntity.setQuestion(question);
-					ansIntity.setAnswer(answer.getAnswer());
-				}
-					
-				String correctAnswer =qService.findCorrectAnswerById(question.getId());
-				
-				if(correctAnswer.equals(answer.getAnswer())) {
-					ansIntity.setScore(1);
-				}else {
-					ansIntity.setScore(0);
-				}
-					ansRepo.save(ansIntity);
-								
-			}else {
+			 for(int i=0;i<studentFromToken.getTeachers().size();i++) {
+				 if(studentFromToken.getTeachers().get(i).getName().equalsIgnoreCase(teacherName)) {
+					 
+					Optional<AnswerIntity> ansExist= ansRepo.findByStudentIdAndQuestionId(answer.getStudentId(), answer.getQuestionId())	;
+						
+					StudentIntity student=studentService.findById(studentFromToken.getId());
+						
+					QuestionIntity question=qService.checkingQuestion(answer.getQuestionId(),teacherName);
+						
+					AnswerIntity ansIntity;
+						
+					if(ansExist.isPresent()) {
+						ansIntity=ansExist.get();
+						ansIntity.setAnswer(answer.getAnswer());
+					}else {
+						ansIntity=new AnswerIntity();
+						ansIntity.setStudent(student);
+						ansIntity.setQuestion(question);
+						ansIntity.setAnswer(answer.getAnswer());
+					}
+							
+						String correctAnswer =qService.findCorrectAnswerById(question.getId());
+						
+						if(correctAnswer.equals(answer.getAnswer())) {
+							ansIntity.setScore(1);
+						}else {
+							ansIntity.setScore(0);
+						}
+							ansRepo.save(ansIntity);					
+					}
+					 
+				 }
+			 }else {
 				throw new Exception("Not Allowed");
 			}
 
 	}
 	
 	
-	public void update(AnswerDTO answer,String authentication) throws Exception {
-			this.insert(answer,authentication);
+	public void update(AnswerDTO answer,String authentication,String teacherName) throws Exception {
+			this.insert(answer,authentication,teacherName);
 	}
 	
 
-	public List<QuestionDTOAsStudent>findQuestionsAsStudent(String authentication) throws Exception {
+	public List<QuestionDTOAsStudent>findQuestionsAsStudent(String authentication,String teacherName) throws Exception {
+		boolean checkTeacher = false;
 		if(token.decriptStudent(authentication) instanceof StudentIntity ) {
 			StudentIntity student=token.decriptStudent(authentication);
-			return qService.findQuestionsAsStudent(student.getTeacherName());
+			for(int i=0; i<student.getTeachers().size();i++) {
+				if(student.getTeachers().get(i).getName().equalsIgnoreCase(teacherName)) {
+					checkTeacher=true;
+					return qService.findQuestionsAsStudent(teacherName);
+				}
+			}
+			if(checkTeacher==false) {
+				throw new Exception("You Not Take "+teacherName+" 's teacher");
+			}
+			
 		}else {
 			throw new Exception("Not Allowed");
 		}
-		
+		return null;
 	}
 	
+	public List<TeacherDTO> findTeachers(String authentication) throws Exception{
+		if(token.decriptStudent(authentication) instanceof StudentIntity) {
+			return teacherService.findTeacherAsStudent(token.decriptStudent(authentication).getId());
+		}else {
+			throw new Exception("Not Allowed");
+		}
+	}
+	
+	
+	          //Teacher
 	public List<StudentResponse> findAllByDetails(String authentication) throws Exception {
 		if(token.decriptTeacher(authentication) instanceof TeacherIntity ) {
 			TeacherIntity teacher=token.decriptTeacher(authentication);
