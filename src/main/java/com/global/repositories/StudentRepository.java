@@ -22,8 +22,11 @@ public interface StudentRepository extends CrudRepository<StudentIntity,Integer>
 	@Query("select student.id from StudentIntity student where student.email=:email and student.password=:password")
 	public Integer selectId(String email,String password);
 	
-	@Query("select new com.global.classes.StudentDTO(s.id,s.name,s.phone,s.age,s.email,s.password) from StudentIntity s join s.teachers t  where t.name=:teacherName ")
-	public List<StudentDTO> findByTeacherName(String teacherName);
+	@Query("select new com.global.classes.StudentDTO(s.id,s.name,s.phone,s.age,s.email,s.password,y.year) from StudentIntity s join s.teachers t left join s.year y where t.id=:id")
+	public List<StudentDTO> findByTeacherName(int id);
+	
+	@Query("select new com.global.classes.StudentDTO(s.id,s.name,s.phone,s.age,s.email,s.password,y.year) from StudentIntity s join s.teachers t join s.year y  where t.id=:id and y.year=:year ")
+	public List<StudentDTO> findByTeacherNameAndYear(int id,String year);
 	
 	
 //	@Query("select user.isStudent from UserIntity user where user.token=:authorization")

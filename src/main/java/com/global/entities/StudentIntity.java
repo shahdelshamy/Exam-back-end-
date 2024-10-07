@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +34,6 @@ public class StudentIntity {
 	String phone;
 	@NotNull(message = "Age Field Is Required")
 	float age;
-	
 	@NotNull(message = "Email Field Is Required")
 	String email;
 	@NotNull(message = "Password Field Is Required")
@@ -42,8 +43,20 @@ public class StudentIntity {
 	@ManyToMany()
 	@JoinTable(name = "student_teacher",joinColumns = @JoinColumn(name="student_id"),inverseJoinColumns = @JoinColumn(name="teacher_id"))
 	List <TeacherIntity> teachers= new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "year_id")
+	YearIntity year;
+	
 
 	
+	public YearIntity getYear() {
+		return year;
+	}
+
+	public void setYear(YearIntity year) {
+		this.year = year;
+	}
 
 	public List<TeacherIntity> getTeachers() {
 		return teachers;

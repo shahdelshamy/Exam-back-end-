@@ -34,6 +34,10 @@ public class QuestionIntity {
 	@JoinColumn(name = "teacher_id")
     TeacherIntity teacher;
 	
+	@ManyToOne
+	@JoinColumn(name = "year_id")
+    YearIntity year;
+	
 
 	public QuestionIntity(int id, String question, String choice1, String choice2, String choice3, String choice4) {
 		this.id = id;
@@ -47,6 +51,14 @@ public class QuestionIntity {
 	public QuestionIntity() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public YearIntity getYear() {
+		return year;
+	}
+
+	public void setYear(YearIntity year) {
+		this.year = year;
 	}
 
 	public TeacherIntity getTeacher() {

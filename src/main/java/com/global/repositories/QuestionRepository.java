@@ -37,4 +37,5 @@ public interface QuestionRepository extends JpaRepository<QuestionIntity, Intege
 	public Optional<QuestionIntity> findByIdAndName(int id,String name);
 
 	
+	
 }

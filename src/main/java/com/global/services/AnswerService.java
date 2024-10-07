@@ -43,12 +43,12 @@ public class AnswerService {
 	public void insert(AnswerDTO answer,String authentication,String teacherName) throws Exception {
 		
 		StudentDTO user=new StudentDTO();
-		boolean checkTeacher;
+		boolean checkTeacher = false;
 		
 		if(token.decriptStudent(authentication) instanceof StudentIntity) {
 			 StudentIntity studentFromToken=token.decriptStudent(authentication);
 			 for(int i=0;i<studentFromToken.getTeachers().size();i++) {
-				 if(studentFromToken.getTeachers().get(i).getName().equalsIgnoreCase(teacherName)) {
+				 if(studentFromToken.getTeachers().get(i).getName().equals(teacherName)) {
 					 
 					Optional<AnswerIntity> ansExist= ansRepo.findByStudentIdAndQuestionId(answer.getStudentId(), answer.getQuestionId())	;
 						
@@ -75,10 +75,14 @@ public class AnswerService {
 						}else {
 							ansIntity.setScore(0);
 						}
-							ansRepo.save(ansIntity);					
+							ansRepo.save(ansIntity);
+							checkTeacher=true;
 					}
 					 
 				 }
+			 if(checkTeacher == false ) {
+				 throw new Exception("You not take in this teacher");
+			 }
 			 }else {
 				throw new Exception("Not Allowed");
 			}
@@ -90,82 +94,7 @@ public class AnswerService {
 			this.insert(answer,authentication,teacherName);
 	}
 	
-
-	public List<QuestionDTOAsStudent>findQuestionsAsStudent(String authentication,String teacherName) throws Exception {
-		boolean checkTeacher = false;
-		if(token.decriptStudent(authentication) instanceof StudentIntity ) {
-			StudentIntity student=token.decriptStudent(authentication);
-			for(int i=0; i<student.getTeachers().size();i++) {
-				if(student.getTeachers().get(i).getName().equalsIgnoreCase(teacherName)) {
-					checkTeacher=true;
-					return qService.findQuestionsAsStudent(teacherName);
-				}
-			}
-			if(checkTeacher==false) {
-				throw new Exception("You Not Take "+teacherName+" 's teacher");
-			}
-			
-		}else {
-			throw new Exception("Not Allowed");
-		}
-		return null;
-	}
 	
-	public List<TeacherDTO> findTeachers(String authentication) throws Exception{
-		if(token.decriptStudent(authentication) instanceof StudentIntity) {
-			return teacherService.findTeacherAsStudent(token.decriptStudent(authentication).getId());
-		}else {
-			throw new Exception("Not Allowed");
-		}
-	}
-	
-	
-	          //Teacher
-	public List<StudentResponse> findAllByDetails(String authentication) throws Exception {
-		if(token.decriptTeacher(authentication) instanceof TeacherIntity ) {
-			TeacherIntity teacher=token.decriptTeacher(authentication);
-			return (List<StudentResponse>) ansRepo.findAllByDetails(teacher.getName());
-		}else {
-			throw new Exception("Not Allowed");
-		}
-		
-	}
-	
-	public List<StudentResponseTopFail> findAllStudents(String authentication) throws Exception {
-		if(token.decriptTeacher(authentication) instanceof TeacherIntity) {
-			TeacherIntity teacher=token.decriptTeacher(authentication);
-			return ansRepo.findAllStudents(teacher.getName());   //getContent to return list
-		}else {
-			throw new Exception("the authoriation token not valid");
-		}
-		
-	}
-	
-	public List<StudentResponseTopFail> findTopStudents(int limit,int successDegree,String authentication) throws Exception {
-		if(token.decriptTeacher(authentication) instanceof TeacherIntity) {
-			
-			TeacherIntity teacher=token.decriptTeacher(authentication);
-			
-			Pageable pageable=PageRequest.of(0, limit);
-			return ansRepo.findTopStudents(pageable,successDegree,teacher.getName()).getContent();   //getContent to return list
-		}else {
-			throw new Exception("the authoriation token not valid");
-		}
-		
-		
-	}
-	
-	public List<StudentResponseTopFail> findFailStudents(int successDegree,String authentication) throws Exception {
-		if(token.decriptTeacher(authentication) instanceof TeacherIntity) {
-			
-			TeacherIntity teacher=token.decriptTeacher(authentication);
-			
-			return ansRepo.findFailStudents(successDegree,teacher.getName());  
-		}else {
-			throw new Exception("the authoriation token not valid");
-		}
-		
-	}
 	
 	
 }

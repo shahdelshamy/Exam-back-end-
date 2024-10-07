@@ -41,36 +41,7 @@ public class AnswerController {
 		return "Your answer updated";
 	}
 	
-	@GetMapping("/findQuestion")
-	public List<QuestionDTOAsStudent>findQuestionsAsStudent(@RequestHeader String authentication,@RequestHeader String teacherName) throws Exception{
-		return ansService.findQuestionsAsStudent(authentication,teacherName);
-	}
-	@GetMapping("/findTeachers")
-	public List<TeacherDTO>findTeachers(@RequestHeader String authentication) throws Exception{
-		return ansService.findTeachers(authentication);
-	}
 	
-	
-	        //Teacher
-	@GetMapping("/findAnswersByDetails")
-	public List<StudentResponse> findAllByDetails(@RequestHeader String authentication) throws Exception {
-		return ansService.findAllByDetails(authentication);
-	}
-	
-	@GetMapping("/findresults")
-	public List<StudentResponseTopFail> findAll(@RequestHeader String authentication) throws Exception {
-		return  ansService.findAllStudents(authentication);
-	}
-	
-	@GetMapping("/findTopStudents")
-	public List<StudentResponseTopFail> findTop(@RequestParam int numberOfStudents,@RequestParam int successDegree,@RequestHeader String authentication) throws Exception {
-		return  ansService.findTopStudents(numberOfStudents,successDegree,authentication);
-	}
-	
-	@GetMapping("/findFailStudents")
-	public List<StudentResponseTopFail> findFail(@RequestParam int successDegree,@RequestHeader String authentication) throws Exception {
-		return  ansService.findFailStudents(successDegree,authentication);
-	}
 
 
 }

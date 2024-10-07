@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.global.classes.QuestionDTO;
+import com.global.classes.QuestionDTOAsStudent;
 import com.global.entities.QuestionIntity;
 import com.global.entities.StudentIntity;
 import com.global.services.QuestionService;
@@ -28,8 +29,8 @@ public class QuestionController {
 	QuestionService qService;
 	
 	@PostMapping("/insert")
-	public String insert(@RequestBody QuestionDTO q,@RequestHeader String authentication) throws Exception {
-		qService.insertQuestion(q,authentication);
+	public String insert(@RequestBody QuestionDTO q,@RequestHeader String authentication,@RequestHeader String year) throws Exception {
+		qService.insertQuestion(q,authentication,year);
 		return "The question is added";
 	}
 	
@@ -58,6 +59,11 @@ public class QuestionController {
 	@GetMapping("/numberOfQuestions")
 	public String numberOfQuestions(@RequestHeader String authentication) throws Exception  {
 		return "The number of questions now is "+qService.countOfQuestions(authentication);
+	}
+	
+	@GetMapping("/findQuestion")
+	public List<QuestionDTOAsStudent>findQuestionsAsStudent(@RequestHeader String authentication,@RequestHeader String teacherName) throws Exception{
+		return qService.findQuestionsAsStudent(authentication,teacherName);
 	}
 	
 	@DeleteMapping("/delete/{id}")

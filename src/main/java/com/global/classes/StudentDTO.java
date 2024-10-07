@@ -8,7 +8,7 @@ public class StudentDTO {
 	float age;
 	String email;
 	String password;
-
+	String year;
 	
 
 	public StudentDTO(int id, String name, String phone, float age, String email, String password) {
@@ -21,11 +21,34 @@ public class StudentDTO {
 		this.password = password;
 	}
 	
-	
+	public StudentDTO(int id, String name, String phone, float age, String email, String password, String year) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.age = age;
+		this.email = email;
+		this.password = password;
+		this.year = year;
+	}
+
+
+
 	public StudentDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String getYear() {
+		return year;
+	}
+
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 
 
 	public int getId() {

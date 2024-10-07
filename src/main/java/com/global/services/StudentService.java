@@ -14,6 +14,7 @@ import com.global.classes.StudentDTO;
 import com.global.classes.UserResponse;
 import com.global.entities.StudentIntity;
 import com.global.entities.TeacherIntity;
+import com.global.entities.YearIntity;
 import com.global.entities.StudentIntity;
 import com.global.repositories.StudentRepository;
 import com.google.gson.Gson;
@@ -30,27 +31,46 @@ public class StudentService {
 	@Autowired
 	TeacherService teacher;
 	
+	@Autowired
+	YearService yearService;
+	
 	private Authentication auth=new Authentication();
 
 	
 	public UserResponse insert(StudentIntity student) throws Exception {
+		
+		boolean checkYear=false;
+		
 		if(auth.checkEmailAndPhone(student.getEmail(), student.getPhone())) {
 			List <TeacherIntity> teacherStudent = new ArrayList<>();
 			for(int i=0;i<student.getTeachers().size();i++) {
 				Optional<TeacherIntity>teacherExist= teacher.findById(student.getTeachers().get(i).getId());
 				if(teacherExist.isPresent()) {
+					List<YearIntity>years=teacher.findYearsById(teacherExist.get().getId());
+					for(int j=0;j<years.size();j++) {
+						if(years.get(j).getId() == student.getYear().getId()) {
+							student.setYear(student.getYear());
+							checkYear=true;
+							break;
+						}
+					}
+					if(checkYear == false) {
+						throw new Exception("This teacher not take this year");
+					}
 					teacherStudent.add(teacherExist.get());
 				}else{
 					throw new Exception("The teachher not found");
 				}
 			}
+			
 			student.setTeachers(teacherStudent);
+			
 			userRepo.save(student);
 			
-			ObjectMapper objectToString=new ObjectMapper();       //Jackson
-			String value=objectToString.writeValueAsString(student);
+//			ObjectMapper objectToString=new ObjectMapper();       //Jackson
+//			String value=objectToString.writeValueAsString(student);
 			
-			String encriptedToken=auth.encript(value);
+			String encriptedToken=auth.encript(student);
 			System.out.println("Serialized JSON: " + encriptedToken);
 			
 			UserResponse user=new UserResponse();
@@ -88,7 +108,16 @@ public class StudentService {
 	
 	public List<StudentDTO> findAllStudentsAsTeacher(String authentication) throws Exception {
 		if(auth.decriptTeacher(authentication) instanceof TeacherIntity) {
-			return (List<StudentDTO>) userRepo.findByTeacherName(auth.decriptTeacher(authentication).getName());
+			return (List<StudentDTO>) userRepo.findByTeacherName(auth.decriptTeacher(authentication).getId());
+		}else {
+			throw new Exception("Not Allowed");
+		}
+		
+	}
+	
+	public List<StudentDTO> findStudentsOfYearAsTeacher(String authentication,String year) throws Exception {
+		if(auth.decriptTeacher(authentication) instanceof TeacherIntity) {
+			return (List<StudentDTO>) userRepo.findByTeacherNameAndYear(auth.decriptTeacher(authentication).getId(),year);
 		}else {
 			throw new Exception("Not Allowed");
 		}
