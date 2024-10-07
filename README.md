@@ -32,8 +32,3 @@ Before running the project, ensure you have the following installed:
 [![GitHub](https://img.shields.io/badge/github-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/your-username/exam-project)
 
 [![LinkedIn](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/shahd-abdelnaby-90bb832a6)
-
-## 🤝 Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request if you would like to contribute to this project.
-
