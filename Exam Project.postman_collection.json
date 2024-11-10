@@ -1,0 +1,670 @@
+{
+	"info": {
+		"_postman_id": "0bd8c460-ec5e-4597-a11a-4d6818318746",
+		"name": "Exam Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37413619"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "student",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"bassant\",\r\n    \"phone\": \"01010659903\",\r\n    \"age\": 21,\r\n    \"email\": \"bassant@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"teachers\": [\r\n        {\r\n            \"id\":6\r\n        }\r\n    ],\r\n    \"year\":{\r\n        \"id\":1\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/student/insert",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"student",
+										"insert"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authentication",
+										"value": "fiVsZyU9NS8lcWRwaCU9JXZrZGtnJS8lc2tycWglPSUzNDM0Mzk4PDw2JS8lZGpoJT01NDEzLyVocGRsbyU9JXZrZGtnQ2pwZGxvMWZycCUvJXNkdnZ6cnVnJT0lNDU2JS8ld2hkZmtodVFkcGglPSVka3BoZyNkb2wlwoA=",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":2,\r\n    \"name\":\"shahd\",\r\n    \"phone\":\"0101065993\",\r\n    \"age\":25,\r\n    \"email\":\"shahdS@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"teacherName\":\"ahmed ali\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/student/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"student",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/student/delete/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"student",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/student/findById/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"student",
+										"findById",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find all",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/student/findAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"student",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Teacher",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"alyaa\",\r\n    \"phone\": \"01010659903\",\r\n    \"age\": 30,\r\n    \"email\": \"alyaa@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"matrial\": \"math\",\r\n    \"university\": \"zagazig\",\r\n    \"years\": [\r\n        {\r\n            \"id\": 1\r\n        },\r\n        {\r\n            \"id\": 2\r\n        },\r\n        {\r\n            \"id\": 3\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/teacher/insert",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"teacher",
+										"insert"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authentication",
+										"value": "fiVsZyU9Ny8lcWRwaCU9JURrcGhnI2RvbCUvJXNrcnFoJT0lMzQzNDM5ODw8NiUvJWRqaCU9NjgxMy8laHBkbG8lPSVEa3BoZ1dDanBkbG8xZnJwJS8lc2R2dnpydWclPSU0NTYlLyVwZHd1bGRvJT0lc2t8dmxmdiUvJXhxbHlodXZsd3wlPSV9ZGpkfWxqJcKA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":4,\r\n    \"name\": \"ahmed ali\",\r\n    \"phone\": \"0101065993\",\r\n    \"age\": 30,\r\n    \"email\": \"ahmedT@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"matrial\":\"physics\",\r\n    \"university\":\"zagazig\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/teacher/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"teacher",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authentication",
+										"value": "fiVsZyU9NC8lcWRwaCU9JWRrcGhnI2RvbCUvJXNrcnFoJT0lMzQzNDM5ODw8NiUvJWRqaCU9NjMxMy8laHBkbG8lPSVwcnZ3ZGlkV0NqcGRsbzFmcnAlLyVzZHZ2enJ1ZyU9JTQ1NiUvJXBkd3VsZG8lPSVkdWRlbGYlLyV4cWx5aHV2bHd8JT0lfWRqZH1saiXCgA==",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/teacher/delete/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"teacher",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/teacher/findById/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"teacher",
+										"findById",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find all",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7071/teacher/findAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"teacher",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "check role",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "mai123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7071/register/checkAuthorization",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"register",
+								"checkAuthorization"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "update answer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authentication",
+								"value": "fiVsZyU9Ni8lcWRwaCU9JWtkZWxlZCUvJXNrcnFoJT0lMzQzNDM5ODw8NiUvJWRqaCU9NDsxMy8laHBkbG8lPSVrZGVsZWRWQ2pwZGxvMWZycCUvJXNkdnZ6cnVnJT0lNDU2JS8ld2hkZmtodVFkcGglPSVka3BoZyNkb2wlwoA=",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"questionId\":13,\r\n   \"studentId\":3,\r\n   \"answer\":\"choice4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7071/answers/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"answers",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert answer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authentication",
+								"value": "eyJpZCI6NiwibmFtZSI6ImJhc3NhbnQiLCJwaG9uZSI6IjAxMDEwNjU5OTAzIiwiYWdlIjoyMS4wLCJlbWFpbCI6ImJhc3NhbnRAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjMiLCJ0ZWFjaGVycyI6W3siaWQiOjYsIm5hbWUiOiJhbHlhYSIsInBob25lIjoiMDEwMTA2NTk5MDMiLCJhZ2UiOjMwLjAsImVtYWlsIjoiYWx5YWFAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjMiLCJtYXRyaWFsIjoibWF0aCIsInVuaXZlcnNpdHkiOiJ6YWdhemlnIiwieWVhcnMiOlt7ImlkIjoxLCJ5ZWFyIjoiZmlyc3QifSx7ImlkIjoyLCJ5ZWFyIjoic2Vjb25kIn0seyJpZCI6MywieWVhciI6InRoaXJkIn1dfV0sInllYXIiOnsiaWQiOjEsInllYXIiOm51bGx9fQ==",
+								"type": "text"
+							},
+							{
+								"key": "teacherName",
+								"value": "alyaa",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionId\":1,\r\n    \"answer\": \"choice1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7071/answers/insert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"answers",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find questions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authentication",
+								"value": "fiVsZyU9NS8lcWRwaCU9JXZrZGtnJS8lc2tycWglPSUzNDM0Mzk4PDw2JS8lZGpoJT01NDEzLyVocGRsbyU9JXZrZGtnVkNqcGRsbzFmcnAlLyVzZHZ2enJ1ZyU9JTQ1NiUvJXdoZGZraHV2JT1efiVsZyU9NS8lcWRwaCU9JXBydndkaWQjcGRrcGhnJS8lc2tycWglPSUzNDM0Mzk4PDw2JS8lZGpoJT02MzEzLyVocGRsbyU9JXBydndkaWRXQ2pwZGxvMWZycCUvJXNkdnZ6cnVnJT0lNDU2JS8lcGR3dWxkbyU9JXBkd2slLyV4cWx5aHV2bHd8JT0lfWRqZH1saiXCgC9+JWxnJT00LyVxZHBoJT0lZGtwaGcjZG9sJS8lc2tycWglPSUzNDM0Mzk4PDw2JS8lZGpoJT02MzEzLyVocGRsbyU9JWRrcGhnV0NqcGRsbzFmcnAlLyVzZHZ2enJ1ZyU9JTQ1NiUvJXBkd3VsZG8lPSVkdWRlbGYlLyV4cWx5aHV2bHd8JT0lfWRqZH1saiXCgGDCgA==",
+								"type": "text"
+							},
+							{
+								"key": "teacherName",
+								"value": "ahmed ali",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7071/question/findQuestion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"question",
+								"findQuestion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find teachers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authentication",
+								"value": "fiVsZyU9Ni8lcWRwaCU9JXFycnUlLyVza3JxaCU9JTM0MzQzOTg8PDYlLyVkamglPTU0MTMvJWhwZGxvJT0lcXJydVZDanBkbG8xZnJwJS8lc2R2dnpydWclPSU0NTYlLyV3aGRma2h1diU9Xn4lbGclPTQvJXFkcGglPSVka3BoZyNkb2wlLyVza3JxaCU9JTM0MzQzOTg8PDYlLyVkamglPTYzMTMvJWhwZGxvJT0lZGtwaGdXQ2pwZGxvMWZycCUvJXNkdnZ6cnVnJT0lNDU2JS8lcGR3dWxkbyU9JWR1ZGVsZiUvJXhxbHlodXZsd3wlPSV9ZGpkfWxqJcKAYMKA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7071/teacher/findTeachers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"teacher",
+								"findTeachers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "Question",
+					"item": [
+						{
+							"name": "add question",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "findAll",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "number of questions",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "find answers with details by year",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find results of all",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find results of year",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find Years",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find top students",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find fail students",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find all students",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "find all students of year",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
